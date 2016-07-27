@@ -1,5 +1,8 @@
 # A Quick Tour
 
+
+
+
 ## Packages and Modules
 
 The basic compilation unit is the module. A module consists of an
@@ -39,13 +42,12 @@ package.
 
 ### Boolean
 
-The base library defines a lot of basic data types. E.g. the module `boolean`
-defines the type `BOOLEAN` with all be usual operators.
+The base library defines a lot of basic data types. E.g. the module
+[`boolean`][boolean] defines the type `BOOLEAN` with all be usual operators.
 
     -- a, b, c: BOOLEAN
 
     a and b or c            -- 'and' binds stronger than 'or'
-
 
     a ==> b ==> c or a      -- implication is right associative and binds
                             -- weaker than 'and' and 'or'
@@ -56,8 +58,8 @@ defines the type `BOOLEAN` with all be usual operators.
 
 ### Natural
 
-The module `natural` defines the type `NATURAL` which represent arbitrary
-large natural numbers.
+The module [`natural`][natural] defines the type `NATURAL` which represent
+arbitrary large natural numbers.
 
     -- a,b,c,n: NATURAL
 
@@ -73,9 +75,9 @@ large natural numbers.
 
 ### Tuples
 
-Tuples are defined in the module `tuple`. The type `(NATURAL,BOOLEAN,NATURAL)`
-is a 3-tuple and `(5,true,3)` is a corresponding tuple expression. Tuples are
-right associative.
+Tuples are defined in the module [`tuple`][tuple]. The type
+`(NATURAL,BOOLEAN,NATURAL)` is a 3-tuple and `(5,true,3)` is a corresponding
+tuple expression. Tuples are right associative.
 
      (NATURAL,BOOLEAN,NATURAL)   -- is parsed as (NATURAL,(BOOLEAN,NATURAL))
 
@@ -159,6 +161,23 @@ defines the binary tree
 ## Functions
 
 
+
+
+
+
+
+
+[boolean]: https://raw.githubusercontent.com/hbr/albatross/master/library/alba.base/boolean.ali
+
+[any]: https://raw.githubusercontent.com/hbr/albatross/master/library/alba.base/any.ali
+
+[tuple]: https://raw.githubusercontent.com/hbr/albatross/master/library/alba.base/tuple.ali
+
+[natural]: https://raw.githubusercontent.com/hbr/albatross/master/library/alba.base/natural.ali
+
+[function]: https://raw.githubusercontent.com/hbr/albatross/master/library/alba.base/function.ali
+
+[predicate]: https://raw.githubusercontent.com/hbr/albatross/master/library/alba.base/predicate.ali
 
 
 
