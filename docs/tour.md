@@ -1,6 +1,7 @@
 # A Quick Tour
 
-
+This chapter gives a quick overview over the language features without
+spelling out details.
 
 
 ## Packages and Modules
@@ -29,6 +30,29 @@ This module uses the modules [`predicate_logic`][predicate_logic] and
 After the usage block an arbitrary sequence of declarations follow. A
 declaration is either a type or type variable declaration, a function
 declaration or a theorem (see below).
+
+The modules of a package must reside in one directory. The directory has to be
+initialized as an Albatross directory by issuing the command
+
+    alba init
+
+on the command line.
+
+After initialization the command
+
+    alba compile
+
+compiles all modules in the directory which need to be compiled. Dependencies
+are handled by the compiler i.e. the compiler recompiles only modules which
+have been changed since the last compilation or which use a module which has
+been changed since the last compilation.
+
+The command
+
+    alba help
+
+displays the available commands and its options.
+
 
 ## Comments
 
@@ -61,7 +85,7 @@ The base library defines a lot of basic data types. E.g. the module
 
 ### Natural
 
-The module [`natural`][natural] defines the type `NATURAL` which represent
+The module [`natural`][natural] defines the type `NATURAL` which represents
 arbitrary large natural numbers.
 
     -- a,b,c,n: NATURAL
@@ -106,6 +130,34 @@ elements of a tuple.
          -- some expression using the components
 
 
+### List Type
+
+The list type is defined in the module [`list`][list] of the basic library.
+
+    -- Types
+    [NATURAL]            -- A list of natural numbers
+
+    [NATURAL,BOOLEAN]    -- A list of tuples of natural numbers and booleans
+
+    -- Expressions
+    []                   -- The empty list
+
+    1 ^ []               -- The empty list prefixed by 1
+
+    [1,2,3,4] = 1 ^ 2 ^ 3  ^ 4 ^ []    -- '^' is right associative
+
+    - [1,2,3,4] = [4,3,2,1]  -- operator '-' reverses the list
+
+    [1,2].head = 1
+
+    [1,2].tail = [2]
+
+    -- A:ANY, x:A,  a:[A]
+    - a + [x] = - x ^ a      -- '^' binds stronger than '-'
+
+    - a + - b = - (b + a)
+
+
 
 ### Predicate Type
 
@@ -145,7 +197,7 @@ predicates are defined in the modules [`predicate`][predicate] and
 
 ### Function Type
 
-The function type and its relation functions are defined in the modules
+The function type and its related functions are defined in the modules
 [`function`][function] and [`function_logic`][function_logic].
 
     -- Types
@@ -157,7 +209,8 @@ The function type and its relation functions are defined in the modules
     (NATURAL,NATURAL) -> BOOLEAN        -- an uncurried two argument function
 
     -- Expressions
-    n -> n + 2
+    n -> n + 2                          -- an anonymous function mapping its
+                                        -- argument 'n' to 'n + 2'
 
     (n,m) -> n + m
 
@@ -237,7 +290,7 @@ type) and an expression which defines the function.
            case tree(info,left,right) then
                inorder(left) + info ^ inorder(right)
 
-    (-) (t:BINARY_TREE[A]: BINARY_TREE[A]
+    (-) (t:BINARY_TREE[A]): BINARY_TREE[A]
             -- The flipped tree 't'.
         -> inspect
            case leaf then
@@ -265,7 +318,7 @@ be defined by properties.
 
     origin (b:B, f:A->B): ghost A
             -- The value in the domain of 'f' which is mapped by 'f' to 'b'.
-            -- 'f(b.origin(f)) = b
+            -- I.e. 'f(b.origin(f)) = b'
         require
             f.is_injective
             b in f.domain
@@ -276,8 +329,136 @@ be defined by properties.
 In this case the compiler verifies that there exists a value which satisfies
 the properties and that the value is unique. Note that functions can have
 preconditions. The above function would be illegal without the preconditions
-because for arbitrary function is not invertible and it is only possible to
+because an arbitrary function is not invertible and it is only possible to
 find the original value if the image lies in the range of the function.
+
+Functions defined by properties are always ghost functions because no
+algorithm is given to compute the result.
+
+The language supports object oriented notation and classical mathematical
+notation of function applications. The following expressions are equivalent.
+
+    f(x,y,...) = x.f(y,...)
+
+    g(x) = x.g
+
+    g(g(g(x)))  = x.g.g.g
+
+The last example demonstrates that object oriented notation can be useful to
+avoid excessive parentheses.
+
+
+## Theorems
+
+A theorem expressed in Albatross has the following form
+
+    all(a:A, b:B, ....)        -- Variables of the theorem
+        require
+            r1
+            r2
+            ...
+        ensure
+            exp                -- expression which is generally true assuming
+                               -- r1; r2; ...
+        -- optional proof
+        end
+
+Example:
+
+    all(a,b:BOOLEAN)
+        require
+            not (a or b)
+        ensure
+            not a
+        end
+
+The compiler can prove this theorem automatically. It just requires the
+expansion of boolean negation and two backward reasoning steps.
+
+In the same manner `not (a or b) ==> not b` can be proved automatically.
+
+The similar statement `not (a and b) ==> not a or not b` cannot be proved
+automatically by the compiler. It needs some help with a user supplied proof.
+
+    all(a,b:BOOLEAN)
+        require
+            not (a or b)
+        ensure
+            not a and not b
+        via
+            require not (not a or not b)
+        end
+
+The compiler is given the hint to prove the goal by assuming the opposite and
+derive a contradiction. A proof of the form `via require x` instructs the
+compiler to assume `x` and derive a contradiction and afterwards to use `x ==>
+false` to prove the original goal.
+
+
+In the previous chapter we have defined a function which flips a binary
+tree. Evidently flipping a tree twice shall result in the original
+tree. I.e. we want to prove `- - t = t` for any tree `t`. Since the flipping
+function `-` is defined by recursion a proof by induction might prove the
+desired goal.
+
+    all(t:BINARY_TREE[A])
+        ensure
+            - - t = t
+        inspect
+            t
+        end
+
+An induction proof is triggered by `inspect x` where `x` has to be a variable
+of an algebraic type. The compiler is instructed to perform a case split on
+the constructors of the type.
+
+For the constructor `leaf` the proof is trivial because `- leaf = leaf` by
+definition.
+
+For the constructor `tree` the proof is not that trivial, but succeeds
+automatically. The compiler tries to prove `- - tree(i,l,r) = tree(i,l,r)` and
+expands `- - tree(i,l,r)` to `- tree(i,-r,-l)` and then to `tree(i, - - l, - -
+r)`. Then it compares this expression which the right hand side `tree(i,l,r)`
+and derives the subgoals that `- - l = l` and `- - r = r` have to be
+true. This succeeds immediately by looking at the induction hypotheses.
+
+In the previous chapter we defined the function `inorder` which returns the
+inorder sequence of a binary tree. It should be possible to prove that the
+inorder sequence of the flipped tree is the reverse of the inorder sequence of
+the original tree. I.e. we want to prove the assertion `(- t).inorder = -
+t.inorder` for any binary tree `t`.
+
+This proof is done by induction with some help for the constructor `tree`.
+
+    all(t:BINARY_TREE[A])
+        ensure
+            (- t).inorder = - t.inorder
+        inspect
+            t
+        case tree(i,l,r)
+            via [(- tree(i,l,r)).inorder
+                 (- r.inorder) + ([i] + - l.inorder)   -- def
+                 (- r.inorder + [i]) + - l.inorder     -- assoc
+                 (- i ^ r.inorder) + - l.inorder       -- - a + [x] = - x ^ a
+                 (- (l.inorder + i ^ r.inorder))       -- - a + - b = - (b + a)
+                 (- tree(i,l,r).inorder)]              -- def
+        end
+
+For the constructor `tree` we have to derive the equality
+
+    (- tree(i,l,r)).inorder = - tree(i,l,r).inorder
+
+We do this by using the fact that `=` is transitive and provide the
+intermediate steps which transform the left hand side into the right hand side
+of the desired equality. If we want to prove a relation of the form `r(a,z)`
+with any transitive relation `r` we can do this by the proof expression `via [
+b; c; ... ; y]` provided that the intermediate expressions `r(a,b)`, `r(b,c)`,
+..., `r(y,z)` are all provable.
+
+
+
+
+
 
 
 
@@ -289,6 +470,8 @@ find the original value if the image lies in the range of the function.
 [tuple]: https://raw.githubusercontent.com/hbr/albatross/master/library/alba.base/tuple.ali
 
 [natural]: https://raw.githubusercontent.com/hbr/albatross/master/library/alba.base/natural.ali
+
+[list]: https://raw.githubusercontent.com/hbr/albatross/master/library/alba.base/list.ali
 
 [function]: https://raw.githubusercontent.com/hbr/albatross/master/library/alba.base/function.ali
 
