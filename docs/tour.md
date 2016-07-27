@@ -26,6 +26,9 @@ This module uses the modules [`predicate_logic`][predicate_logic] and
 [`natural`][natural] of the Albatross base library and the modules
 `my_module_1` and `my_module_2` of the current package.
 
+After the usage block an arbitrary sequence of declarations follow. A
+declaration is either a type or type variable declaration, a function
+declaration or a theorem (see below).
 
 ## Comments
 
@@ -104,7 +107,7 @@ elements of a tuple.
 
 
 
-### Predicate
+### Predicate Type
 
 A predicate is a boolean valued total function. It defines the set of all
 elements which satisfy the predicate. The type and the basic functions with
@@ -113,12 +116,12 @@ predicates are defined in the modules [`predicate`][predicate] and
 
     -- Types
     {NATURAL}          -- A set of natural numbers
-    
+
     {NATURAL,BOOLEAN}  -- A set of pairs of naturals and booleans i.e.
                        -- a relation between natural numbers and booleans
 
     {{NATURAL}}        -- A collection of sets of natural numbers
-    
+
     -- Expressions
     {n: n < 5}         -- The set of natural numbers below 5
 
@@ -140,7 +143,37 @@ predicates are defined in the modules [`predicate`][predicate] and
     * ps               -- union of all sets in ps
 
 
-## Types and Type Variables
+### Function Type
+
+The function type and its relation functions are defined in the modules
+[`function`][function] and [`function_logic`][function_logic].
+
+    -- Types
+    NATURAL -> NATURAL
+
+    NATURAL -> NATURAL -> NATURAL       -- a curried two argument function
+                                        -- '->' is right associative
+
+    (NATURAL,NATURAL) -> BOOLEAN        -- an uncurried two argument function
+
+    -- Expressions
+    n -> n + 2
+
+    (n,m) -> n + m
+
+    (n,m:NATURAL):BOOLEAN -> n <= m     -- type annotations are optional if
+                                        -- the compiler can infer the types
+
+    (n -> n + 2)(1) = 3
+
+    (n -> n + 2).is_injective = true
+
+    3.origin(n -> n + 2) = 1            -- if a function is injective then it
+                                        -- is valid to apply the function
+                                        -- 'origin' to get the preimage
+
+
+## Type and Type Variable Declaration
 
 A data type is declared with a class declaration.
 
@@ -174,7 +207,7 @@ By using type variables it is possible to declare generic datatypes
     end
 
 The type variable `A` describes an arbitrary type i.e. a type which inherits
-the type `ANY` (defined in the module `any` of the base library.
+the type `ANY` (defined in the module [`any`][any] of the base library.
 
 The expression
 
@@ -188,11 +221,63 @@ defines the binary tree
                               /
                              4
 
-## Functions
 
 
+## Function Declaration
+
+Functions are declared by giving a signature (name, argument types and return
+type) and an expression which defines the function.
+
+    inorder (t:BINARY_TREE[A]): [A]
+            -- The inorder sequence of the elements of the tree 't'.
+        -> inspect
+               t
+           case leaf then
+               []
+           case tree(info,left,right) then
+               inorder(left) + info ^ inorder(right)
+
+    (-) (t:BINARY_TREE[A]: BINARY_TREE[A]
+            -- The flipped tree 't'.
+        -> inspect
+           case leaf then
+               leaf
+           case tree(info,left,right) then
+               tree(info, -right, -left)
+
+Note that operators can be used as function names, but they must be put into
+parentheses.
+
+The compiler verifies that there is no illegal recursion i.e. that at least
+one argument in a recursive call is (structurally) less than the original
+argument.
+
+It might be possible that a defining expression is not computable. In that
+case the function has to be declared as a ghost function.
+
+    is_transitive (r:{A,A}): ghost BOOLEAN
+            -- Is the relation 'r' transitive?
+        -> all(a,b,c) r(a,b) ==> r(b,c) ==> r(a,c)
 
 
+Instead of giving an explicit expression to define a function, a function can
+be defined by properties.
+
+    origin (b:B, f:A->B): ghost A
+            -- The value in the domain of 'f' which is mapped by 'f' to 'b'.
+            -- 'f(b.origin(f)) = b
+        require
+            f.is_injective
+            b in f.domain
+        ensure
+            f(Result) = b
+        end
+
+In this case the compiler verifies that there exists a value which satisfies
+the properties and that the value is unique. Note that functions can have
+preconditions. The above function would be illegal without the preconditions
+because for arbitrary function is not invertible and it is only possible to
+find the original value if the image lies in the range of the function.
 
 
 
