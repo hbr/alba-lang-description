@@ -22,9 +22,9 @@ Each module starts with a usage block listing the used modules. Example
         ...
     end
 
-This module uses the modules `predicate_logic` and `natural` of the Albatross
-base library and the modules `my_module_1` and `my_module_2` of the current
-package.
+This module uses the modules [`predicate_logic`][predicate_logic] and
+[`natural`][natural] of the Albatross base library and the modules
+`my_module_1` and `my_module_2` of the current package.
 
 
 ## Comments
@@ -107,7 +107,37 @@ elements of a tuple.
 ### Predicate
 
 A predicate is a boolean valued total function. It defines the set of all
-elements which satisfy the predicate.
+elements which satisfy the predicate. The type and the basic functions with
+predicates are defined in the modules [`predicate`][predicate] and
+[`predicate_logic`][predicate_logic].
+
+    -- Types
+    {NATURAL}          -- A set of natural numbers
+    
+    {NATURAL,BOOLEAN}  -- A set of pairs of naturals and booleans i.e.
+                       -- a relation between natural numbers and booleans
+
+    {{NATURAL}}        -- A collection of sets of natural numbers
+    
+    -- Expressions
+    {n: n < 5}         -- The set of natural numbers below 5
+
+    {n:NATURAL: n < 5} -- Type annotations can be given explicitely
+
+    3 in {n: n < 5}  = true
+
+    5 in {n: n < 5}  = false
+
+    {n: n < 5} * {n: 0 <= n}  -- Set intersection
+
+    {n: n < 5} + {n: 6 < n}   -- Set union
+
+    {2}                -- Shorthand for {n: n = 2}
+
+    {2,3}              -- Shorthand for {2} + {3}
+
+    -- ps: {{NATURAL}}   i.e. ps is a collection of sets
+    * ps               -- union of all sets in ps
 
 
 ## Types and Type Variables
@@ -177,7 +207,11 @@ defines the binary tree
 
 [function]: https://raw.githubusercontent.com/hbr/albatross/master/library/alba.base/function.ali
 
+[function_logic]: https://raw.githubusercontent.com/hbr/albatross/master/library/alba.base/function_logic.ali
+
 [predicate]: https://raw.githubusercontent.com/hbr/albatross/master/library/alba.base/predicate.ali
+
+[predicate_logic]: https://raw.githubusercontent.com/hbr/albatross/master/library/alba.base/predicate_logic.ali
 
 
 
