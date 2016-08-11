@@ -64,10 +64,9 @@ displays the available commands and its options.
        until the end of comment marker is detected :}
 
 
-## Expressions with Basic Types
 
 
-### Boolean
+## Boolean Type
 
 The base library defines a lot of basic data types. E.g. the module
 [`boolean`][boolean] defines the type `BOOLEAN` with all be usual operators.
@@ -83,7 +82,7 @@ The base library defines a lot of basic data types. E.g. the module
 
     a = b                   -- boolean equivalence
 
-### Natural
+## Natural Type
 
 The module [`natural`][natural] defines the type `NATURAL` which represents
 arbitrary large natural numbers.
@@ -100,7 +99,7 @@ arbitrary large natural numbers.
 
 
 
-### Tuples
+## Tuple Type
 
 Tuples are defined in the module [`tuple`][tuple]. The type
 `(NATURAL,BOOLEAN,NATURAL)` is a 3-tuple and `(5,true,3)` is a corresponding
@@ -130,7 +129,7 @@ elements of a tuple.
          -- some expression using the components
 
 
-### List Type
+## List Type
 
 The list type is defined in the module [`list`][list] of the basic library.
 
@@ -159,7 +158,7 @@ The list type is defined in the module [`list`][list] of the basic library.
 
 
 
-### Predicate Type
+## Predicate Type
 
 A predicate is a boolean valued total function. It defines the set of all
 elements which satisfy the predicate. The type and the basic functions with
@@ -195,7 +194,7 @@ predicates are defined in the modules [`predicate`][predicate] and
     * ps               -- union of all sets in ps
 
 
-### Function Type
+## Function Type
 
 The function type and its related functions are defined in the modules
 [`function`][function] and [`function_logic`][function_logic].
@@ -317,11 +316,11 @@ Instead of giving an explicit expression to define a function, a function can
 be defined by properties.
 
     origin (b:B, f:A->B): ghost A
-            -- The value in the domain of 'f' which is mapped by 'f' to 'b'.
+            -- The value in the domain of 'f' which is mapped to 'b' by 'f'.
             -- I.e. 'f(b.origin(f)) = b'
         require
             f.is_injective
-            b in f.domain
+            b in f.range
         ensure
             f(Result) = b
         end
@@ -348,7 +347,7 @@ The last example demonstrates that object oriented notation can be useful to
 avoid excessive parentheses.
 
 
-## Theorems
+## Theorem Declaration and Theorem Proving
 
 A theorem expressed in Albatross has the following form
 
@@ -382,12 +381,12 @@ automatically by the compiler. It needs some help with a user supplied proof.
 
     all(a,b:BOOLEAN)
         require
-            not (a or b)
+            not (a and b)
         ensure
-            not a and not b
-        via
-            require not (not a or not b)
-        end
+            not a or not b
+        via require
+            not (not a or not b)  -- has the form 'not (x or y)', therefore
+                                  -- the above theorem can be applied
 
 The compiler is given the hint to prove the goal by assuming the opposite and
 derive a contradiction. A proof of the form `via require x` instructs the
