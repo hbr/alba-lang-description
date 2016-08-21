@@ -7,7 +7,7 @@ spelling out details.
 ## Packages and Modules
 
 The basic compilation unit is the module. A module consists of an
-implementation file (extension `.al`) and and interface file (extension
+implementation file (extension `.al`) and an interface file (extension
 `.ali`).
 
 Each module belongs to a package. A package or library is a set of modules.
@@ -56,7 +56,7 @@ displays the available commands and its options.
 
 ## Comments
 
-    -- A single line comment
+    -- A single line comment (the blank after -- is significant!)
 
     {: A multiline comment
 
@@ -69,7 +69,7 @@ displays the available commands and its options.
 ## Boolean Type
 
 The base library defines a lot of basic data types. E.g. the module
-[`boolean`][boolean] defines the type `BOOLEAN` with all be usual operators.
+[`boolean`][boolean] defines the type `BOOLEAN` with all the usual operators.
 
     -- a, b, c: BOOLEAN
 
@@ -81,6 +81,40 @@ The base library defines a lot of basic data types. E.g. the module
     not (a and b)           -- negation has highest precedence
 
     a = b                   -- boolean equivalence
+
+
+## Any Type
+
+The type `ANY` is defined in the module [`any`](any). It is an abstract type
+whose only purpose is to define equality `=` and inequality `/=`. Abstract
+types can be used to define type variables. The declarition
+
+    A: ANY
+
+defines the Type variable `A` which can be substituted by any type which
+inherits `ANY` i.e. any type which has a definition of the equality operator
+(and all meaningful types have an equality operator). The module `any` defines
+equality as an abstract function.
+
+    A: ANY
+
+    (=) (a,b:A): BOOLEAN
+        deferred
+        end
+
+i.e. a function which _defers_ the actual definition to its descendants. But
+based on this abstract function it defines inequality
+
+    (/=) (a,b:A): BOOLEAN
+        -> not (a = b)
+
+which is inherited by any type which inherits `ANY`.
+
+Note that every specific definition of the equality operator in any specific
+type must satisfy the leibniz property which says that equal objects must be
+indistinguishable. The compiler verifies this property. Therefore it is always
+possible to substituted equals for equals.
+
 
 ## Natural Type
 
@@ -141,7 +175,8 @@ The list type is defined in the module [`list`][list] of the basic library.
     -- Expressions
     []                   -- The empty list
 
-    1 ^ []               -- The empty list prefixed by 1
+    1 ^ []               -- The list [1] i.e. the value 1 prepended in front
+                         -- of the empty list.
 
     [1,2,3,4] = 1 ^ 2 ^ 3  ^ 4 ^ []    -- '^' is right associative
 
@@ -191,7 +226,10 @@ predicates are defined in the modules [`predicate`][predicate] and
     {2,3}              -- Shorthand for {2} + {3}
 
     -- ps: {{NATURAL}}   i.e. ps is a collection of sets
-    * ps               -- union of all sets in ps
+    + ps               -- union of all sets in ps
+
+    * ps               -- the intersection of all sets in ps
+
 
 
 ## Function Type
@@ -237,8 +275,8 @@ A data type is declared with a class declaration.
         blue
     end
 
-This type has three constructors without arguments. We can define data types
-with constructors with arguments.
+This type has three constructors without arguments. It is also possible define
+data types with constructors with arguments.
 
     class
         OPTIONAL_NATURAL
@@ -258,7 +296,7 @@ By using type variables it is possible to declare generic datatypes
         tree(info:A, left,right: BINARY_TREE[A])
     end
 
-The type variable `A` describes an arbitrary type i.e. a type which inherits
+The type variable `A` represents an arbitrary type i.e. a type which inherits
 the type `ANY` (defined in the module [`any`][any] of the base library.
 
 The expression
@@ -272,6 +310,8 @@ defines the binary tree
                          2     3
                               /
                              4
+
+and has the type `BINARY_TREE[NATURAL]`.
 
 
 
@@ -292,20 +332,19 @@ type) and an expression which defines the function.
     (-) (t:BINARY_TREE[A]): BINARY_TREE[A]
             -- The flipped tree 't'.
         -> inspect
+               t
            case leaf then
                leaf
            case tree(info,left,right) then
                tree(info, -right, -left)
 
-Note that operators can be used as function names, but they must be put into
-parentheses.
 
 The compiler verifies that there is no illegal recursion i.e. that at least
 one argument in a recursive call is (structurally) less than the original
 argument.
 
-It might be possible that a defining expression is not computable. In that
-case the function has to be declared as a ghost function.
+It is possible that a defining expression of a function is not computable. In
+that case the function has to be declared as a ghost function.
 
     is_transitive (r:{A,A}): ghost BOOLEAN
             -- Is the relation 'r' transitive?
@@ -326,10 +365,11 @@ be defined by properties.
         end
 
 In this case the compiler verifies that there exists a value which satisfies
-the properties and that the value is unique. Note that functions can have
-preconditions. The above function would be illegal without the preconditions
-because an arbitrary function is not invertible and it is only possible to
-find the original value if the image lies in the range of the function.
+the property or properties and that the value is unique. Note that functions
+can have preconditions. The above function would be illegal without the
+preconditions because an arbitrary function is not invertible and it is only
+possible to find the original value if the image lies in the range of the
+function.
 
 Functions defined by properties are always ghost functions because no
 algorithm is given to compute the result.
@@ -343,7 +383,7 @@ notation of function applications. The following expressions are equivalent.
 
     g(g(g(x)))  = x.g.g.g
 
-The last example demonstrates that object oriented notation can be useful to
+The last example illustrates that object oriented notation can be useful to
 avoid excessive parentheses.
 
 
