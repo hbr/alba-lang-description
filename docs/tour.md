@@ -251,8 +251,9 @@ The function type and its related functions are defined in the modules
 
     (n,m) -> n + m
 
-    (n,m:NATURAL):BOOLEAN -> n <= m     -- type annotations are optional if
-                                        -- the compiler can infer the types
+    (n,m:NATURAL):BOOLEAN -> n <= m     -- type annotations are optional and
+                                        -- necessary only if the compiler cannot
+                                        -- infer the types
 
     (n -> n + 2)(1) = 3
 
@@ -317,8 +318,8 @@ and has the type `BINARY_TREE[NATURAL]`.
 
 ## Function Declaration
 
-Functions are declared by giving a signature (name, argument types and return
-type) and an expression which defines the function.
+Functions are declared by giving a name, a signature (argument types and
+return type) and an expression which defines the function.
 
     inorder (t:BINARY_TREE[A]): [A]
             -- The inorder sequence of the elements of the tree 't'.
