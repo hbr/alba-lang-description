@@ -71,13 +71,13 @@ files `m.al` and `m.ali` in the working directory which must have been
 initialized as an Albatross directory.
 
 The compiler analyzes dependencies within a package. I.e. if the module `m`
-uses the module `n` of the same package and then module `n` has been modified
+uses the module `n` of the same package and the module `n` has been modified
 since the last compilation the compiler compiles module `n` before compiling
 module `m`.
 
 This guarantees that a module is compiled only if all directly or indirectly
-modules of the same package have been compiled successfully. Therefore there
-is no need for makefiles.
+used modules of the same package have been compiled successfully. Therefore
+there is no need for makefiles.
 
 Issuing the command
 
