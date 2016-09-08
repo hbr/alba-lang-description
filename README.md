@@ -1,3 +1,15 @@
+# Albatross Programming Language
+
+**Version:** 0.3
+
+**Author:** Helmut Brandl (helmut dot brandl at gmx dot net)
+
+**Download:** http://sourceforge.net/projects/albatross-lang
+
+**Website:** http://albatross-lang.sourceforge.net
+
+# What is Albatross?
+
 Albatross is a programming language which can be verified statically. You
 write programs in Albatross and prove them to be correct in the same language.
 
@@ -26,3 +38,14 @@ the following philosophy:
 
 Because of this philosophy the Albatross compiler is something between a proof
 assistant and a theorem prover.
+
+
+
+
+<!---
+Local Variables:
+mode: outline
+coding: iso-latin-1
+outline-regexp: "#+"
+End:
+-->
