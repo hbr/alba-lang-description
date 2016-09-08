@@ -501,25 +501,16 @@ b; c; ... ; y]` provided that the intermediate expressions `r(a,b)`, `r(b,c)`,
 
 
 
+[boolean]: http://github.com/hbr/albatross/blob/master/library/alba.base/boolean.ali
+[any]:     http://github.com/hbr/albatross/blob/master/library/alba.base/any.ali
+[tuple]:   http://github.com/hbr/albatross/blob/master/library/alba.base/tuple.ali
+[natural]: http://github.com/hbr/albatross/blob/master/library/alba.base/natural.ali
+[list]:    http://github.com/hbr/albatross/blob/master/library/alba.base/list.ali
+[function]:http://github.com/hbr/albatross/blob/master/library/alba.base/function.ali
+[predicate]: http://github.com/hbr/albatross/blob/master/library/alba.base/predicate.ali
+[predicate_logic]: http://github.com/hbr/albatross/blob/master/library/alba.base/predicate_logic.ali
 
 
-[boolean]: https://raw.githubusercontent.com/hbr/albatross/master/library/alba.base/boolean.ali
-
-[any]: https://raw.githubusercontent.com/hbr/albatross/master/library/alba.base/any.ali
-
-[tuple]: https://raw.githubusercontent.com/hbr/albatross/master/library/alba.base/tuple.ali
-
-[natural]: https://raw.githubusercontent.com/hbr/albatross/master/library/alba.base/natural.ali
-
-[list]: https://raw.githubusercontent.com/hbr/albatross/master/library/alba.base/list.ali
-
-[function]: https://raw.githubusercontent.com/hbr/albatross/master/library/alba.base/function.ali
-
-[function_logic]: https://raw.githubusercontent.com/hbr/albatross/master/library/alba.base/function_logic.ali
-
-[predicate]: https://raw.githubusercontent.com/hbr/albatross/master/library/alba.base/predicate.ali
-
-[predicate_logic]: https://raw.githubusercontent.com/hbr/albatross/master/library/alba.base/predicate_logic.ali
 
 
 
