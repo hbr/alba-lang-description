@@ -433,6 +433,159 @@ q`. I.e. for the second case we have to prove
          end
 
 
+## More on Induction
+
+In this section we use the following definitions for the set of even numbers
+and the set of odd numbers.
+
+
+    even_numbers: ghost {NATURAL}
+        -> {(p): 0 in p, all(n) n in p ==> n + 2 in p}
+
+    odd_numbers: ghost {NATURAL}
+        -> {(p): 1 in p, all(n) n in p ==> n + 2 in p}
+
+If we these definitions are inline with our understanding of even and odd
+numbers we should be able to prove that both sets are disjoint i.e. we should
+be able to prove `all(n,m:NATURAL) n in even_numbers ==> m in odd_numbers ==>
+n /= m`.
+
+In that example we have a number `n` which is in the set of even numbers and a
+number `m` which is in the set of odd numbers. We can do induction on either
+variable and in order to prove the claim that `n` and `m` are different we
+have to do induction on both.
+
+Let's use `n` for the outer induction proof and `m` for the inner induction
+proof. Here is the skeleton if the outer induction proof.
+
+
+    all(n,m:NATURAL)
+        require
+            n in even_numbers
+            m in odd_numbers
+        ensure
+            n /= m
+        inspect
+            n in even_numbers
+        case 0 in even_numbers
+            ...
+        case all(k) k in even_numbers ==> k + 2 in even_numbers
+            ...
+        end
+
+In doing induction proofs with inductively defined sets it is very important
+to know the generated goal predicate. For the outer proof the compiler generates
+the generalized goal
+
+    all(m) m in odd_numbers ==> n /= m
+
+and the corresponding goal predicate `q`
+
+    {n: all(m) m in odd_numbers ==> n /= m}
+
+The second rule in the definition of `even_numbers` has the form `all(...) c1
+==> e in p`. In this case we have `c1(p) = k in p` where `p` is
+`even_numbers`.
+
+In order to get the induction hypothesis we have to replace `p` by `q` and we
+get
+
+    k in {n: all(m) m in odd_numbers ==> n /= m}
+
+which evaluates to
+
+    all(m) m in odd_numbers ==> k /= m
+
+We can fill the induction hypothesis into the skeleton of the proof.
+
+
+    all(n,m:NATURAL)
+        require
+            n in even_numbers
+            m in odd_numbers
+        ensure
+            n /= m
+        inspect
+            n in even_numbers
+        case 0 in even_numbers
+            ...
+        case all(k) k in even_numbers ==> k + 2 in even_numbers
+            assert
+                all(m) m in odd_numbers ==> k /= m  -- outer induction
+                                                    -- hypothesis
+                m in odd_numbers   -- shifted into the context
+                                   -- with a fresh variable 'm'
+
+                -- goal: k + 2 /= m
+                ...
+        end
+
+As already explained in the chapter [Inductive Types](types_inductive.md) the
+compiler generates a generalized goal and a corresponding goal predicate but
+in the cases of the induction prove it provides us with the corresponding
+variables and the premises shifted into the context.
+
+In our case the goal predicate is `{n: all(m) m in odd_numbers ==> n /= m}`
+which generates for the second case the generalized goal `k + 2 in {n:
+all(m) m in odd_numbers ==> n /= m}` or in evaluated form `all(m) m in
+odd_numbers ==> k + 2 /= m`.
+
+The compiler generates a fresh variable `m` which shadows the outer one,
+shifts the premise `m in odd_numbers` into the context and tries to prove the
+goal `k + 2 /= m`.
+
+Now we can start with the inner induction in which we analyze the different
+cases why `m` can be in `odd_numbers` and prove the inner goal `k + 2 = m`.
+
+For the inner induction proof (induction on `m`) the compiler generates the
+goal predicate `{m: k + 2 = m}` which does not need any generalization.
+
+The second case of the inner induction proof is the more interesting one. In
+the second case we analyze that `m` is equal to `o + 2` for some ther numbers
+`o`. The goal in this case is `o + 2 in {m: k + 2 /= m}` which evaluates to
+`k + 2 /= o + 2`. The induction hypothesis `o in {m: k + 2 = m}` which
+evaluates to `k + 2 /= o` is useless in this case.
+
+However we know that `o in odd_numbers` is valid and can specialized the
+induction hypothesis of the outer induction proof to `k /= o` which is useful
+because it implies `k + 2 /= o + 2`.
+
+Having this we can complete the proof.
+
+    all(n,m:NATURAL)
+        require
+            n in even_numbers
+            m in odd_numbers
+        ensure
+            n /= m
+        inspect
+            n in even_numbers
+        case 0 in even_numbers
+            (inspect
+                 m in odd_numbers
+            )
+        case all(k) k in even_numbers ==> k + 2 in even_numbers
+            (assert
+                 all(m) m in odd_numbers ==> k /= m  -- outer induction
+                                                     -- hypothesis
+                 m in odd_numbers   -- shifted into the context
+                                    -- with a fresh variable 'm'
+
+                 -- goal: k + 2 /= m
+             inspect
+                 m in odd_numbers
+             case all(o) o in odd_numbers ==> o + 2 in odd_numbers
+                 assert
+                     k /= o          -- from outer induction hypothesis
+                     k + 2 /= o + 2  -- goal
+            )
+        end
+
+Note that the cases `0` and `1` are trivial because `0 /= 1` is valid and for
+all numbers `x` the inequalities `0 /= x + 2` and `x + 2 /= 1` are valid which
+can be verified by expanding the inequality function `/=` and by doing
+computation of the equality function `=`.
+
 
 
 <!---
