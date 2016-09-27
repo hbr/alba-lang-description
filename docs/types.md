@@ -1,6 +1,12 @@
 # Types
 
-_work in progress_
+In Albatross 0.3 we have
+
+- Inductive Types
+
+- Abstract Types
+
+Other types will be defined in future versions.
 
 <!---
 Local Variables:
