@@ -262,6 +262,79 @@ Proof expressions can be chained and nested.
         end
 
 
+
+
+## Realistic Theorem
+
+We demonstrate some of the proof expressions with a more realistic
+example. Suppose we have the following definitions.
+
+    A: ANY
+    B: ANY
+
+    (<=) (p,q:{A}): ghost BOOLEAN
+            -- Is 'p' a subset of 'q'?
+        -> all(x) x in p ==> x in q
+
+    domain (r:{A,B}): ghost {A}
+            -- The domain of the relation 'r'.
+        -> {a: some(b) r(a,b)}
+
+    range (r:{A,B}): ghost {B}
+            -- The range of the relation 'r'.
+        -> {b: some(a) r(a,b)}
+
+    carrier (r:{A,A}): ghost {A}
+            -- The carrier of the relation 'r'.
+        -> r.domain + r.range
+
+
+Obviously if a relation `r` is a subset (subrelation) of the relation `s` then
+the carrier of `r` has to be a subset of the carrier of `s`.
+
+The following proof expands first the definition of `r.carrier <= s.carrier`,
+Then it makes a case split and uses an existential proof within each case with
+some assertion block.
+
+    all(r,s:{A,A})
+        require
+            r <= s
+        ensure
+            r.carrier <= s.carrier
+        assert
+            all(x)
+                require
+                    x in r.carrier
+                ensure
+                    x in s.carrier
+
+                -- 'x' is in 'r.carrier', therefore it has to be in the domain
+                -- or in the range of 'r'. I.e. we can prove by case split.
+                if x in r.domain
+                        -- if 'x' is in the domain of 'r' then there is some
+                        -- 'y' with 'r(x,y)
+                    via some(y)
+                        r(x,y)
+                    assert
+                        s(x,y)    -- because of 'r is a subset of 's'
+                        x in s.domain
+                        x in s.carrier
+                orif x in r.range
+                        -- if 'x' is in the range of 'r' then there is some
+                        -- 'y' with 'r(y,x)
+                    via some(y)
+                        r(y,x)
+                    assert
+                        s(y,x)    -- because of 'r is a subset of 's'
+                        x in s.range
+                        x in s.carrier
+                end
+        end
+
+
+
+
+
 <!---
 Local Variables:
 mode: outline
