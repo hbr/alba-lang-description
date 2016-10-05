@@ -30,7 +30,7 @@ by the compiler automatically. The automation features have been designed with
 the following philosophy:
 
 - The compiler does all low level work that can be done efficiently
-  without entering a hugh search space.
+  without entering a huge search space.
 
 - The programmer has to provide the more intelligent steps which require
   some creativity.
