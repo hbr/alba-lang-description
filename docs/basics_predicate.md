@@ -1,9 +1,10 @@
 # Predicate and Predicate Logic
 
 
-A predicate `p` over a type is a total function which maps elements `a` of the type to
-then boolean value `p(a)`. The result `true` indicates that `a` satisfies the
-predicate, `false` indicates that `a` does not satisfy the predicate.
+A predicate `p` over a type is a total function which maps elements `a` of the
+type to the boolean value `p(a)`. The result `true` indicates that `a`
+satisfies the predicate, `false` indicates that `a` does not satisfy the
+predicate.
 
 All elements which satisfy the predicate form a set. Therefore we can identify
 each predicate with the set of all elements which satisfy the predicate.
@@ -79,7 +80,7 @@ The less-equal operator `<=` is used to define the subset function. A set (aka
 predicate) `p` is a subset of the set `q` if all elements of `p` are contained
 in the set `q`. This is exactly what the definition of the operator `<=`
 says. Since the definition contains a quantified expression, the function has
-to be marked as a ghost functions (see chapter [Functions](functions.md) for
+to be marked as a ghost function (see chapter [Functions](functions.md) for
 details).
 
 The equality operator `=` says that two sets are equal if they are mutually
@@ -121,7 +122,7 @@ valid while a predicate expression without the guards would not be valid.
     {variable(s): e1 ==> e2}
     {variable(s): e1 and e2}
 
-Since boolean expressions are lazily evaluated the expressions `e2` are
+Since boolean expressions are lazily evaluated the expression `e2` is
 evaluated only if `e1` evaluates to `true`.
 
 The boolean expression within a predicate expression might or might not
@@ -219,7 +220,7 @@ Albatross.
             -- The intersection of the collection of sets 'ps'.
         -> {x: all(p) p in ps  ==>  x in p}
 
-Evidently these functions have to be marked as ghost functions since the
+Evidently these functions have to be marked as ghost functions since their
 definition terms are not computable. Note that `+` and `*` can be used as
 binary and as unary operators. Since the signatures of these functions are
 different from all other functions using these operators there is no
@@ -344,11 +345,11 @@ over tuples i.e. it represents a set of pairs which is a binary relation.
 
 Note that such a definition has to use the module `tuple` to be valid and the
 module `tuple` uses the module `predicate`. Therefore the module `predicate`
-cannot define functions with relations without creating a circular module
+cannot define functions using relations without creating a circular module
 dependency.
 
 Therefore the base library has a module `relation` which uses `tuple` and
-`predicate` and can therefore define functions with relations. E.g. the module
+`predicate` and can therefore define functions using relations. E.g. the module
 `relation` defines the following functions
 
     A: ANY

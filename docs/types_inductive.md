@@ -295,12 +295,12 @@ If we check the premise `0 in {n: 0 + n = n}` corresponding to the constructor
 `0` we get by beta reduction `0 + 0 = 0` which immediately evaluates to true
 by using the definition of addition.
 
-For the constructor `successor` step we can assume `a in {n: 0 + n = n}`
-i.e. `0 + a = a` and have to prove that this assumption implies `a.successor
-in {n: 0 + n = n}` i.e. `0 + a.successor = a.successor`. The compiler
-evaluates this goal to `(0 + a).successor = a.successor` and then by using the
-defintion of equality to `0 + a = a` (injectivity) which is identical to the
-induction hypothesis.
+For the constructor `successor` we can assume `a in {n: 0 + n = n}` i.e. `0 +
+a = a` and have to prove that this assumption implies `a.successor in {n: 0 +
+n = n}` i.e. `0 + a.successor = a.successor`. The compiler evaluates this goal
+to `(0 + a).successor = a.successor` and then by using the defintion of
+equality to `0 + a = a` (injectivity) which is identical to the induction
+hypothesis.
 
 Both premises of the induction law are satisfied for the propery `{n: 0 + n =
 n}`, therefore all numbers satisfy this property.
@@ -351,7 +351,7 @@ Now let's try to proof commutativity of addition `a + b = b + a` for all
 numbers `a` and `b`. We can do induction on `a` or on `b` and since the goal
 is symmetric there should be no difference. So let's try induction on `b`.
 
-Since we have already proved `a + 0 = a` and `0 + a = a` then case that `b`
+Since we have already proved `a + 0 = a` and `0 + a = a` the case that `b`
 has been constructed with `0` should be no problem.
 
 The induction step tells us that we can assume the induction hypothesis `a + b
@@ -470,8 +470,8 @@ i.e. it extracts the predicate
 and use it to apply the induction principle in order to prove `all(x) x in
 {...}`.
 
-This improved goal predicate gives us much stronger induction hypotheses than
-the naively extracted goal predicate.
+This improved goal predicate results in a much stronger induction hypotheses
+than the induction hypothesis from the naively extracted goal predicate.
 
 This is one service that the compiler does with all induction proofs. It
 extracts the most general goal predicate before it applies the induction

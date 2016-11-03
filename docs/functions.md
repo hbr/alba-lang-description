@@ -127,7 +127,7 @@ origin. I.e. we can define the function
 The function `origin` is defined by properties. The result of the function
 must be in the domain of `f` and `f` maps the result to `b`.
 
-If the compiler sees this definition it verifies that the result exists an is
+If the compiler sees this definition it verifies that the result exists and is
 unique. In this particular case the verification is quite straightforward by
 looking at the definition of `is_injective` and `range`. The function `range`
 is defined as
@@ -214,7 +214,7 @@ possibilities to construct a number of type `POSITIVE` because the class
 In the successor function there is one recursive call in the third case of the
 pattern matching. This case is entered if the positive number `p` has been
 constructed as `n.twice_plus1` with some number `n`. The number `n` is
-structurally less then `p` because `p` has been constructed by using `n` as an
+structurally less than `p` because `p` has been constructed by using `n` as an
 argument. Therefore `n` can be used in the recursive call `n.successor`.
 
 The addition function does structural recursion on its second
@@ -222,7 +222,7 @@ argument. Recursive calls happen in the second and in the third case. The
 second argument used in the recursive calls is always structurally less than
 the original argument `b`.
 
-The albatross compiler can expand recursive functions if it can determine the
+The Albatross compiler can expand recursive functions if it can determine the
 correct branch. It does expansion iteratively therefore it can do symbolic
 computations. E.g. the following theorem (see chapter [Theorems](theorems.md))
 can be proved automatically by the proof engine by using iterated function

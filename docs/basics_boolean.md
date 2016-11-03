@@ -83,7 +83,7 @@ compiler. The proof engine can apply the modus ponens law i.e. given `a` and
 `a ==> b` it concludes `b`. This is a kind of elimination rule for `==>`.
 
 The boolean constant `true` and the operators `and` and `or` are defined in
-the implementation file, but the definitions are not disclosed in the
+the implementation file, but their definitions are not disclosed in the
 interface file. Instead of a definition some theorems are listed in the
 interface file which have been proved in the implementation file. For details
 on the form of theorems see chapter [Theorems](theorems.md).

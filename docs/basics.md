@@ -16,8 +16,8 @@ It is assumed that all or some of these modules are used heavily in
 application modules. Therefore in this chapter we give an overview of these
 modules.
 
-We describe the types and the most important functions. We do describe
-the theorems of these modules. They can be read by reading the interface
+We describe the types and the most important functions. We do not describe the
+theorems of these modules. They can be understood by reading the interface
 files. The information on types and functions given in the following chapters
 is sufficient to understand the theorems.
 
