@@ -507,6 +507,7 @@ b; c; ... ; y]` provided that the intermediate expressions `r(a,b)`, `r(b,c)`,
 [natural]: http://github.com/hbr/albatross/blob/master/library/alba.base/natural.ali
 [list]:    http://github.com/hbr/albatross/blob/master/library/alba.base/list.ali
 [function]:http://github.com/hbr/albatross/blob/master/library/alba.base/function.ali
+[function_logic]:http://github.com/hbr/albatross/blob/master/library/alba.base/function_logic.ali
 [predicate]: http://github.com/hbr/albatross/blob/master/library/alba.base/predicate.ali
 [predicate_logic]: http://github.com/hbr/albatross/blob/master/library/alba.base/predicate_logic.ali
 
