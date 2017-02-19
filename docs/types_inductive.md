@@ -386,12 +386,11 @@ Now we can prove commutativity of addition by the following proof.
         case b.successor
             -- induction hypothesis: a + b = b + a
             -- goal: a + b.successor = b.successor + a
-            via [
-                   a + b.successor        -- left hand side
-                   (a + b).successor      -- def '+'
-                   (b + a).successor      -- induction hypothesis
-                   b + a.successor        -- def '+'
-                   b.successor + a        -- previous theorem
+            via [  a + b.successor        -- left hand side
+                ,  (a + b).successor      -- def '+'
+                ,  (b + a).successor      -- induction hypothesis
+                ,  b + a.successor        -- def '+'
+                ,  b.successor + a        -- previous theorem
                 ]
         end
 
@@ -420,7 +419,7 @@ transitive relation (see chapter [Predicate and Predicate
 Logic](basics_predicate.md)). Therefore we can prove `a = z` if we can prove
 the intermediate steps `a = b`, `b = c`, ... , `y = z`.
 
-The proof expression `via [b; c; ...; y]` is a way to tell the compiler that
+The proof expression `via [b, c, ..., y]` is a way to tell the compiler that
 one wishes to exploit the transitivity of the equality in the goal `a = z` and
 the compiler should prove the intermediate equalities step by step. It is not
 necessary to mention `a` and `z` in the via expression, but they can be

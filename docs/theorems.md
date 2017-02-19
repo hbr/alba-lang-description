@@ -155,10 +155,9 @@ relation can be used to prove `r(a,z)` by using some intermediate expressions
 
 A transitivity proof has the following form
 
-    via [
-        b
-        c
-        d
+    via [ b
+        , c
+        , d
         ...
     ]
 
@@ -231,7 +230,7 @@ inductively defined set and `x` must be in this set.
 
 
 
-## Chaining of and Nesting of Proof Expressions
+## Chaining and Nesting of Proof Expressions
 
 Proof expressions can be chained and nested.
 
