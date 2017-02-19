@@ -85,8 +85,8 @@ declared as a ghost function.
 
 In words:
 
-- The union of a collection of sets is the set of all elements which are in at
-  least one set of the collection of sets.
+- The union of a collection of sets is the set of all elements which are at
+  least in one of the sets of the collection of sets.
 
 - The intersection of a collection of sets is the set of all elements which
   are in all sets of the collection of sets.

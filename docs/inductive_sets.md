@@ -107,7 +107,7 @@ is in the set might be that other elements are in the set as well or some
 general conditions not referring to other elements of the set.
 
 The conditions `ci` in a rule `all(x,y,...) c1 ==> c2 ==> ... ==> e in p`
-might be itself be complete implication chains of the form `all(a,b,...) di1
+might themselves be complete implication chains of the form `all(a,b,...) di1
 ==> di2 ==> ... ei in p` where the target always states that some other
 element is in the set, possibly under the conditions `di1`, `di2`, ... which
 must not contain the set `p`.

@@ -72,12 +72,12 @@ element list and some longer list.
        ...
     case [h1,h2] then     -- shorthand for h1 ^ h2 ^ []
        ...
-    case h1 ^ h2 ^ tail then
+    case h1 ^ h2 ^ h3 ^ tail then
        ...
 
 If we ommit in the above inspect expression one or more cases, then the inspect
 expression is no longer exhaustive. E.g. if we ommit the last case, then the
-inspect expression has the precondition `not (list as _ ^ _ ^ _)`. The
+inspect expression has the precondition `not (list as _ ^ _ ^ _ ^ _)`. The
 compiler generates the precondition and tries to verify (i.e. proof) it. If
 the compiler cannot verify the precondition, then the expression is invalid.
 
@@ -128,7 +128,7 @@ equality can be used to do backward reasoning as well.
 
 **Backward Reasoning**:
 In order to prove that the two expressions `h1 ^ t1` and `h2 ^ t2` are equal
-it is possible to prove `h1 = h2` and `t1 = t2` individually. Whenever a goal
+it is sufficient to prove `h1 = h2` and `t1 = t2` individually. Whenever a goal
 of the form `h1 ^ t1 = h2 ^ t2` has to be proved, the [proof
 engine](proof_engine.md) does the appropriate split up of the goal into
 simpler goals.
@@ -325,7 +325,7 @@ This pedantic proof has been included here to demonstrate the link to the
 generated induction principle. However it is very tedious to write such
 proofs. E.g. the expression `{n: 0 + n = n}` occurs very often. Furthermore
 none of the premises of the induction law needs an explicit proof because all
-is done be pure symbolic evaluation of terms as explained above.
+is done by pure symbolic evaluation of terms as explained above.
 
 All the steps above are just a mechanical application of the induction
 principle. Fortunately the Albatross compiler can do all the tedious work for
