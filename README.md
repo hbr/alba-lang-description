@@ -1,6 +1,6 @@
 # Albatross Programming Language
 
-**Version:** 0.3
+**Version:** 0.3.x
 
 **Author:** Helmut Brandl (helmut dot brandl at gmx dot net)
 
