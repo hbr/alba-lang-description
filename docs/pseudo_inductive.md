@@ -1,4 +1,6 @@
-# Motivation
+# Pseudoinductive Types
+
+## Motivation
 
 Pseudoinductive types are types which behave like inductive types, but don't
 have an inductive implementation.
@@ -48,7 +50,7 @@ far more appropriate. Therefore we want a compact implementation of strings
 which logically behave like lists of characters.
 
 
-# Machine Number
+## Machine Number
 
 In order to demonstrate the power of pseudoinductive types we define an
 abstract type to represent machine numbers with modulo arithmetic.
@@ -96,7 +98,7 @@ It is convenient to define some other numbers.
     2: N  =  1.successor
 
 
-# Induction Law
+## Induction Law
 
 In order to do induction we need an induction law.
 
@@ -171,7 +173,7 @@ construct a number and on how to extract the arguments of the constructor. In
 order to do that we need recognizers and projectors.
 
 
-# Recognizer
+## Recognizer
 
 Remember that a premise in the induction law of a pseudoinductive type has the
 form
@@ -259,7 +261,7 @@ compile an as expression of the form `n as 0` into `n = 0` and an as
 expression of the form `n as successor(_)` into `n /= 0`.
 
 
-# Projector
+## Projector
 
 In order to convert inspect expressions of the form
 
@@ -328,7 +330,7 @@ is translated into the executable expression
 
 
 
-# Recursion
+## Recursion
 
 
 Inspect expressions or pattern matching expressions can be used to define
@@ -421,7 +423,7 @@ checking of soundness of the recursion.
 
 
 
-# History
+## History
 
 Pseudoinductive types are not a completely new concept. Philip Wadler
 described in [[wadler1987](bibliography.md#wadler1987)] the concept of view
