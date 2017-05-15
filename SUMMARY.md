@@ -33,8 +33,6 @@
     * [Using the Rules](docs/inductive_sets.md#using-the-rules)
     * [Induction Proof](docs/inductive_sets.md#induction-proof)
     * [More on Induction](docs/inductive_sets.md#more-on-induction)
-* [Inheritance](docs/inheritance.md)
 * [Theorems](docs/theorems.md)
 * [Proof Engine](docs/proof_engine.md)
-* [Lexical Conventions](docs/lexical.md)
 * [Bibliography](docs/bibliography.md)
