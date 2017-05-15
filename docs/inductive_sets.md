@@ -2,7 +2,7 @@
 
 
 
-## Inductive Definition of a Set
+## Inductive Definition
 
 We can define sets by giving a start set and some rules on how to add elements
 depending on the already available elements in the set.
@@ -234,7 +234,7 @@ specialization of the second rule which can be used to prove the next step.
 
 
 
-## Induction with Inductively Defined Set
+## Induction Proof
 
 Inductively defined sets (and relations) can be used to do induction
 proofs.
