@@ -16,6 +16,11 @@ Gries, David. (1981). [The Science of Programming](http://blg89.net/blog/wp-cont
 Springer Verlag. ISBN 978-0387964805.
 
 
+### dijkstra1976
+
+E. W. Dijkstra. A Discipline of Programming. Prentice-Hall, 1976.
+
+
 
 ### hoare1969
 
