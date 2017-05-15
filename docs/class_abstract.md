@@ -32,7 +32,7 @@ the class `PARTIAL_ORDER`.
 It is possible to declare a class variable together with the declartion of an
 abstract class as in
 
-   deferred class PO: PARTIAL_ORDER
+    deferred class PO: PARTIAL_ORDER
 
 In order to be useful an abstract class needs some abstract
 functions. Abstract functions are functions with a deferred definition.
@@ -142,9 +142,9 @@ properties.
 
 The above declared abstract class `ABSTRACT_LIST` seems to be very similar to
 the definition of the class `LIST` as an inductive class (as described in the
-chapter [Inductive Types](types_inductive.md)). Wouldn't it be great to have
+chapter [Inductive Classes](class_inductive.md)). Wouldn't it be great to have
 the power of inductive classes (like recursive functions, the possibilty to do
-induction proofs) available within abstract types. Any yes, Albatross allows
+induction proofs) available within abstract types. And yes, Albatross allows
 to declare abstract inductive classes.
 
 
@@ -155,7 +155,7 @@ to declare abstract inductive classes.
         (^) (x:A, xs:AL[A])
     end
 
-With that declaration we the compiler generates an induction law and the
+With that declaration the compiler generates an induction law and the
 inversion and injectivity laws of equality as abstract properties. Having this
 it is possible to use pattern matching to define functions and even recursive
 functions like the following ones
@@ -292,7 +292,7 @@ The compiler does some checks before accepting that class `C` inherits class
   if `B` already inherits `C` directly or indirectly.
 
 - `C` must define all abstract functions of `B`: If `B` has an abstract
-  function `f` then `C` must have a function `f` (or a corresponding name
+  function `f` then `C` must have a function `f` (or with a corresponding name
   according to the rename clause) which is a variant of the function `f` of
   the class `B`. If `C` is an abstract class then the variant of the function
   `f` can be abstract as well.
