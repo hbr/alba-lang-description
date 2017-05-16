@@ -29,7 +29,7 @@ should show a short help text on how to use the compiler.
 
 The Albatross compiler compiles packages or more exactly modules within a
 package. A package is a directory containing Albatross source files of the
-form `<name>.al` and `name.ali`.
+form `<name>.al` and `<name>.ali`.
 
 In order to compile a package it first has to be initialized by issueing the
 command
