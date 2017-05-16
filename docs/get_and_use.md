@@ -11,23 +11,9 @@ do the installation can be found on http://ocaml.org.
 Having the ocaml package manager and the ocaml compiler you can issue the
 commands
 
-    opam install menhir
-    opam install ocamlfind
-    opam install ocamlbuild
+    opam install alba
 
-to get the needed dependencies.
-
-Get the Alba compiler source code from github and unpack it.
-
-    wget https://github.com/hbr/albatross/archive/v0.4.0-rc4.tar.gz
-    tar xzvf v0.4.0-rc4.tar.gz
-
-Then install the compiler via opam.
-
-    cd albatross-0.4.0-rc4
-    opam pin add alba .
-
-These commands install the Alba compiler and the base library within the
+This command installs the Alba compiler and the base library within the
 corresponding opam directories.
 
 The command
