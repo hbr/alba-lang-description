@@ -6,13 +6,14 @@ Software is an integral part of our life today. It has been a complete success
 story in the second half of the 20th century and it continous in the
 21st. Software is indispensable in flight control, aerospace, financial world,
 telecommunication, research etc. Now smartphones have pentrated the worlds
-population. And the world with software controlled cars is not very far.
+population. And the world with aoutonomous software controlled cars is not
+very far.
 
-And even with todays technology to develop software, bugs are an integral part
-of software. Half of the effort to produce software goes into the construction
-of the software and the other half goes into finding (hopefully) most of the
-bugs in the software before the used runs into some of the remaining
-bugs. Unfortunately some severe accidents happened because of bugs in the
+Even with todays technology to develop software, bugs are an integral part of
+software. Half of the effort to produce software goes into the construction of
+the software and the other half goes into finding (hopefully) most of the bugs
+in the software before the user runs into some of the remaining
+bugs. Unfortunately some severe accidents have happened because of bugs in the
 software. Viruses can exploit security bugs in a software to do their bad
 business.
 
