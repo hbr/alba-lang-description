@@ -30,17 +30,17 @@ directly or indirectly. Beside the base library it can use other libraries.
 
 Modules of the same package are used without qualification. Modules of other
 packages must be qualified with their package name. E.g. in order to use the
-module `predicate_logic` of the base library, the usage block of the using
+module `predicate` of the base library, the usage block of the using
 module must have the form
 
     use
-        alba.base.predicate_logic
+        alba.base.predicate
         ...
     end
 
-where `alba.base` is the package name and `predicate_logic` is the module name
-and the module `predicate_logic` consists of the files `predicate_logic.al`
-and `predicate_logic.ali` in the directory of the package `alba.base`. The
+where `alba.base` is the package name and `predicate` is the module name
+and the module `predicate_logic` consists of the files `predicate.al`
+and `predicate.ali` in the directory of the package `alba.base`. The
 user of the module has only access to the declarations of the interface file
 regardless whether the using module resides in the same package or in a
 different package.
@@ -51,13 +51,13 @@ packages. There are two ways to tell the compiler where packages can be
 found. Either via command line options or via an environment variable. The
 command
 
-    alba -I path1 -I path2 -Ipath3 ... 
+    alba -I path1 -I path2 -I path3 ... 
 
 tells the compiler to search in the directories `path1`, `path2`, `path3`,
 ... for Albatross libraries. The paths are searched in the given sequence. If
 a used package is not found on one of the paths then the directories pointed to
-by the environment variable `ALBA_LIB_PATH` are searched. The environment
-variable `ALBA_LIB_PATH` can contain a list of directories separated by `:`.
+by the environment variable `ALBA_LIBRARY_PATH` are searched. The environment
+variable `ALBA_LIBRARY_PATH` can contain a list of directories separated by `:`.
 
 The usage graph of packages must be cycle free. Furthermore the usage graph of
 modules must be cycle free as well.

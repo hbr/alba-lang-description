@@ -336,7 +336,7 @@ corresponding induction hypothesis.
 
 Each inductively defined set has an induction principle which is a little bit
 more complicated to understand than the induction principle associated with an
-[inductive type](types_inductive.md).
+[inductive class](class_inductive.md).
 
 The induction principle of an inductively defined set can be used to prove
 that all elements of the set satisfy a certain property. In the following we

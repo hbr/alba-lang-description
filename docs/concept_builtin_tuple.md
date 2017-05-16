@@ -1,12 +1,10 @@
 # Tuple
 
 
-Tuples are inductive types (see chapter [Inductive Types](types_inductive.md)
-for details). The module `tuple` defines the tuple type in the following
+Tuples are inductive types (see chapter [Inductive Classes](class_inductive.md)
+for details). The module `core` defines the tuple type in the following
 manner.
 
-    -- file: tuple.ali
-    A: ANY
     B: ANY
 
     class

@@ -1,4 +1,4 @@
-# Predicate and Predicate Logic
+# PREDICATE
 
 
 A predicate `p` over a type is a total function which maps elements `a` of the
@@ -9,7 +9,7 @@ predicate.
 All elements which satisfy the predicate form a set. Therefore we can identify
 each predicate with the set of all elements which satisfy the predicate.
 
-## The Predicate Type
+##### The Predicate Type
 
 The class `PREDICATE` is generic and needs a type argument to give a predicate
 type. E.g. the type `PREDICATE[NATURAL]` is a predicate over natural numbers.
@@ -49,7 +49,7 @@ type `{{NATURAL}}` is equivalent to `PREDICATE[PREDICATE[NATURAL]]`.
 
 
 
-## Basic Predicate Functions
+##### Basic Predicate Functions
 
 Now we come to some basic functions of `PREDICATE`.
 
@@ -93,7 +93,7 @@ entitled to inherit `ANY`. However since the equality function is a ghost
 function the inheritance relation has to be marked as a ghost inheritance.
 
 
-## Predicate Expressions
+##### Predicate Expressions
 
 We have already seen expressions like `x in p`, `x /in p`, `p <= q`. However
 all these expressions contain variables which are predicates.
@@ -139,8 +139,8 @@ which says that no natural number can satisfy this predicate. The second
 expression maps all numbers to true, therefore all numbers satisfy this
 predicate.
 
-The module `predicate` uses these expressions to define the empty and the
-universal set in a generic way.
+These expressions are used to define the empty and the universal set in a
+generic way.
 
 
     empty: {A}
@@ -158,6 +158,76 @@ Note that the type annotation in the predicate expressions is no longer
 necessary because the compiler infers the type of `x` from the fact that the
 constants are declared with type `{A}`.
 
+
+##### Beta Reduction
+
+For those familiar with lambda calculus it is not hard to see that predicate
+expressions are lambda expressions. In lambda calculus the expression `{x:
+true}` would be expressed as `lambda x. true`.
+
+In lambda calculus expressions can be beta reduced. E.g.
+
+    (lambda x. p) a    ~>  p[x:=a]
+
+where `p[x:=a]` means that all occurrences of the variable `x` in the
+expression `p` are substituted by `a`.
+
+The Albatross compiler can use beta reduction to symbolically evaluate an
+expression of the form `a in p` if `p` is given as a predicate expression.
+
+E.g.
+
+    a in {x: exp}
+
+evaluates to
+
+    exp[x:=a]            -- this is not Albatross syntax
+
+The compiler can do this evaluation symbolically because beta reduction
+requires only the substitution of a variable by an expression.
+
+
+##### Leibniz Equality
+
+We have already seen that equality is defined in the module `any` and any type
+inheriting `ANY` must define an equality operator which is reflexive in order
+to be entitled to inherit `ANY`.
+
+However this is not the whole story. In Albatross equality has much stronger
+properties which are enforced by the compiler. In Albatross two expressions
+can be equal only if they cannot be distinguished. I.e. if `a = b` is valid
+then all predicates which are satisfied by `a` must be satisfied by `b` as
+well. Otherwise the expressions would be distinguishable by some predicate.
+
+This type of equality is generally called _Leibniz equality_. Having Leibniz
+equality guarantees that equals can always be substituted by equals.
+
+Since we need predicates to define Leibniz equality the corresponding law is
+included in the module `predicate`. It reads
+
+    all(a,b:A, p:{A})
+        ensure
+            a = b ==> a in p ==> b in p
+        end
+
+Remember that Leibniz equality is enforced by the compiler. Relying on Leibniz
+equality the module `predicate` can prove in its implementation file that
+equality is symmetric and transitive. The interface file of the module
+`predicate` just states these facts as proved.
+
+    all(a,b,c:A)
+        ensure
+            a = b  ==>  b = a               -- symmetric
+
+            a = b  ==>  b = c  ==>  a = c   -- transitive
+        end
+
+
+##### Usage of Predicates to Define Set Algebra
+
+The module `predicate` of the library `alba.base` enriches the basic
+declarations of the module `core` to more interesting things with predicates
+like set algebra.
 
 Predicate expressions can be used to express more interesting facts. It is easy
 to define set intersection and set union using predicate expressions.
@@ -194,10 +264,10 @@ the most basic things about predicates.
 
 
 
-## Collection of Sets
+##### Collection of Sets
 
-We have already mentioned that it is possible to define collection of sets in
-Albatross. This is possible because `PREDICATE` inherits `ANY`.
+Further more the module `predicate` exposes definitions to work with
+collection of sets. This is possible because `PREDICATE` inherits `ANY`.
 
 The type `{{A}}` represents a collections of sets of elements of type `A`. We
 can also form a collection of collections of sets like `{{{A}}}`.
@@ -227,36 +297,7 @@ different from all other functions using these operators there is no
 ambiguity.
 
 
-## Beta Reduction
-
-For those familiar with lambda calculus it is not hard to see that predicate
-expressions are lambda expressions. In lambda calculus the expression `{x:
-true}` would be expressed as `lambda x. true`.
-
-In lambda calculus expressions can be beta reduced. E.g.
-
-    (lambda x. p) a    ~>  p[x:=a]
-
-where `p[x:=a]` means that all occurrences of the variable `x` in the
-expression `p` are substituted by `a`.
-
-The Albatross compiler can use beta reduction to symbolically evaluate an
-expression of the form `a in p` if `p` is given as a predicate expression.
-
-E.g.
-
-    a in {x: exp}
-
-evaluates to
-
-    exp[x:=a]            -- this is not Albatross syntax
-
-The compiler can do this evaluation symbolically because beta reduction
-requires only the substitution of a variable by an expression.
-
-
-
-## Enumerated Sets
+##### Enumerated Sets
 
 In mathematics it is possible to define a set by enumerating its
 elements. E.g. `{a,b,c}` is the set which contains the elements `a`, `b` and
@@ -265,7 +306,7 @@ elements. E.g. `{a,b,c}` is the set which contains the elements `a`, `b` and
 In Albatross this is possible as well. However it is important to understand
 what the expression `{a,b,c}` means in Albatross.
 
-The module `predicate_logic` defines the function
+The module `predicate` defines the function
 
     singleton(a:A): {A}
             -- The singleton set with the only element `a`.
@@ -298,45 +339,12 @@ evaluates to
 which is inline with our intuition about enumerated sets.
 
 
-## Leibniz Equality
+##### Relations with Predicates
 
-We have already seen that equality is defined in the module `any` and any type
-inheriting `ANY` must define an equality operator which is reflexive in order
-to be entitled to inherit `ANY`.
+The module `relation` of the library `alba.base` uses predicates to define
+binary relations.
 
-However this is not the whole story. In Albatross equality has much stronger
-properties which are enforced by the compiler. In Albatross two expressions
-can be equal only if they cannot be distinguished. I.e. if `a = b` is valid
-then all predicates which are satisfied by `a` must be satisfied by `b` as
-well. Otherwise the expressions would be distinguishable by some predicate.
-
-This type of equality is generally called _Leibniz equality_. Having Leibniz
-equality guarantees that equals can always be substituted by equals.
-
-Since we need predicates to define Leibniz equality the corresponding law is
-included in the module `predicate`. It reads
-
-    all(a,b:A, p:{A})
-        ensure
-            a = b ==> a in p ==> b in p
-        end
-
-Remember that Leibniz equality is enforced by the compiler. Relying on Leibniz
-equality the module `predicate` can prove in its implementation file that
-equality is symmetric and transitive. The interface file of the module
-`predicate` just states these facts as proved.
-
-    all(a,b,c:A)
-        ensure
-            a = b  ==>  b = a               -- symmetric
-
-            a = b  ==>  b = c  ==>  a = c   -- transitive
-        end
-
-
-## Relations with Predicates
-
-Since tuples (see chapter [Tuple](basics_tuple.md)) inherit `ANY` it is
+Since tuples (see chapter [Tuple](concept_builtin_tuple.md)) inherit `ANY` it is
 possible to form predicates over tuples.
 
 Assume that there are the two type variables `A` and `B` which can be
@@ -376,6 +384,7 @@ As opposed to sets where it is usually more intuitive to write `a in p`
 instead of `p(a)` with relations it is usually more intuitive to write
 `r(a,b)` instead of `(a,b) in r`. But both versions are equally valid in
 Albatross.
+
 
 
 
