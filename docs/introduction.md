@@ -47,7 +47,7 @@ assignment, alternative command and while loops can be given rules which can
 be used to prove the correctness of programs written in this language.
 
 There are certainly more authors who proposed similar ideas. But Robert Floyd
-and Tony Hoare are today the most cited in that are.
+and Tony Hoare are today the most cited in that area.
 
 So in academia the idea of writing software which is correct by construction
 started to gain some momentum.
@@ -66,8 +66,8 @@ this had not happened (at least up to now).
 
 ##### Drawbacks of the Early Formal Methods
 
-Tony Hoare in his 1967 alredy mentioned that it might be difficult to use the
-method in practice.
+Tony Hoare in his 1967 paper already mentioned that it might be difficult to
+use the method in practice.
 
 > However, program proving, certainly at present, will be difficult even for
   programmers of high caliber; and may be applicable only to quite simple
@@ -132,14 +132,14 @@ development and intermediate steps is still too high.
 ##### The Albatross Project
 
 The Albatross programming language with its compiler and verifier tries to
-bridge the remaining gaps and shoots at making verification and everydays task
+bridge the remaining gaps and shoots at making verification an everyday task
 in software development.
 
 Its goal is to make software verification available for the masses.
 
-The Albatross compiler has an integrated proof engine which lifts off the
-burden detailed proof steps off the user. The proof engine can do many proof
-steps automatically and the developer just has to state the desired
+The Albatross compiler has an integrated proof engine which lifts the burden
+detailed proof steps off the user. The proof engine can do many proof steps
+automatically and the developer just has to state the desired
 properties. Clearly complex algorithms still require some deep
 thinking. However straightforward code should work just out of the box.
 
@@ -151,7 +151,7 @@ There is no intermediate language (at least not visible to the developer) to
 compile to. All the glueing of the semantics of the Albatross language and the
 semantics of the target language is hidden to the user.
 
-Albatross allow to write functional, imperative and concurrent code within the
+Albatross allows to write functional, imperative and concurrent code within the
 same language. Its syntax is similar to mainstream object oriented languages
 familiar to todays programmers.
 
