@@ -1,17 +1,13 @@
 # List
 
 A list is a central datastructure in all functional languages. Albatross has a
-strong functional component and therefore has a list type defined in its base
+strong functional component and therefore has a list class defined in its base
 library.
 
-Browse the [source][list] to read the complete user interface.
+##### List Type
 
-## List Type
-
-The module `list` of the base library defines the type in the following
+The module `core` of the base library defines the class in the following
 manner.
-
-    A: ANY
 
     class
         LIST[A]
@@ -33,8 +29,14 @@ the front of a list of naturals parentheses have to be used `(3+4) ^ natlist`.
 Because lists are used frequently there are some shorthands. `[A]` is a
 shorthand for `LIST[A]` and `[a,b,c]` is a shorthand for `a ^ b ^ c ^ []`.
 
+The module `core` does not contain more declarations for lists. More
+interesting functions are declared in the module `list`. All the following
+subchapters explain functions declared in the module `list`. 
 
-## List Functions
+Browse the source code of the module [`list`](list) to see the complete user
+interface.
+
+##### List Functions
 
 It is possible to extract the first element of a list and tail of a list
 (i.e. the list without the first element) provided that the list is not
@@ -99,7 +101,7 @@ module `list` defines some basic list functions.
 
 
 
-## Lists and Higher Order Functions
+##### Lists and Higher Order Functions
 
 Higher order functions are functions which receive functions as arguments or
 return functions as results.
