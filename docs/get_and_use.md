@@ -78,6 +78,13 @@ The command
 compiles the module `name` and searches for used packages in the paths
 `path1`, `path2`, ...
 
+You can set the search paths for packgages by setting the environment variable
+`ALBA_LIBRARY_PATH`. E.g. in the bash shell you can type
+
+    export ALBA_LIBRARY_PATH=<path1>:<path2>:<path3>
+
+to instruct the compiler to search for libraries in the corresponding paths.
+
 If you want to compile a package residing in a different directory than the
 current directory you can indicate this to the compiler via the option
 `-work-dir`.
