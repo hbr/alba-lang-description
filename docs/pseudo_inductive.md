@@ -157,13 +157,13 @@ that `b.successor = a` is valid.
         ensure
             some(k) k.successor = n
         inspect
-            a
+            n
         case 0
             assert
                 greatest.successor = 0
-        case a.successor
+        case m.successor
             assert
-                n.successor = n.successor
+                m.successor = m.successor
         end
 
 The induction law guarantees that all numbers can be constructed by repeated
@@ -192,6 +192,8 @@ condition
 
     x = c
 
+provided that equality for the type is not a ghost function.
+
 
 If the constructor has arguments and there exist arguments `a1`, `a2`,
 ... such that `x = c(a1,a2,...)`, then `x` might have been constructed by the
@@ -207,7 +209,7 @@ condition. I.e. an assertion of the form
     -- exp: computable expression containing 'x'
 
 indicates to the compiler that `exp` is a candidate for a recognizer condition
-for the constructor `c`.
+for the constructor `c` provided that it is not a ghost expression.
 
 The different cases have to be disjoint. In order to guarantee disjointness
 the compiler expects to find the assertions
