@@ -37,13 +37,35 @@ Legal function and variable names:
 
 The usual mathematical notation is used to call a function. `f(x)` calls the
 function `f` with the argument `x`. The convention used in functional
-languages  to call functions by juxtaposition (i.e. `f x`) is not used in
+languages to call functions by juxtaposition (i.e. `f x`) is not used in
 Alba.
 
 If a function has more than one argument it is called by `f(x,y,...)`. Calls
 of the form `f()` are illegal. A constant function doesn't need parentheses,
 it is called by writing its pure name.
 
+Functions can be called in object oriented notation as well. The following
+expressions are equivalent.
+
+    -- math notation         oo notation
+
+    f(x)                     x.f
+    f(f(f(x)))               x.f.f.f
+    g(x,y)                   x.g(y)
+
+Whether you use mathematical or object oriented notation is a matter of
+taste. Both notations are possible in order to choose the more readable and
+expressive one. In my opinion `set.is_empty` is more readable than
+`is_empty(set)` and `x.is_least(set)` looks better than `is_least(x,set)`. For
+the compiler both are equivalent and can be used arbitrarily.
+
+
+## Uniqueness of Functions and Overloading
+
+Function names or operator names do not uniquely identify a function. The
+operator '+' is used for the addition of two numbers, the union of two sets
+etc. Only the function (operator) name together with its signature uniquely
+identifies the function.
 
 
 
@@ -145,8 +167,10 @@ form is correctly parsed.
 
 
 
-<!-- Local Variables:
+<!--
+Local Variables:
 mode: outline
 coding: iso-latin-1
 outline-regexp: "#+"
-End: -->
+End:
+-->

@@ -412,9 +412,9 @@ the induction principle. The induction hypothesis is inserted into the context
 so that the proof can use it.
 
 The goal `a + b.successor = b.successor + a` is an equality which is a
-transitive relation (see chapter [Predicate and Predicate
-Logic](basics_predicate.md)). Therefore we can prove `a = z` if we can prove
-the intermediate steps `a = b`, `b = c`, ... , `y = z`.
+transitive relation (see chapter
+[Predicate](concept_builtin_predicate.md)). Therefore we can prove `a = z` if
+we can prove the intermediate steps `a = b`, `b = c`, ... , `y = z`.
 
 The proof expression `via [b, c, ..., y]` is a way to tell the compiler that
 one wishes to exploit the transitivity of the equality in the goal `a = z` and

@@ -132,7 +132,7 @@ condition `n /= greatest` to make both cases non overlapping.
 An induction law for an arbitrary type `T` has the form
 
 
-    all(x:T, p:{T}) pp1 ==> pp2 ==> .... ==> x in p
+    all(p:{T}, x:T) pp1 ==> pp2 ==> .... ==> x in p
 
 
 where the premises `pp1`, `pp2`, ... have the form
@@ -149,7 +149,7 @@ The extra condition `cond` is optional.
 The compiler recognizes an induction law by syntactic analysis and stores the
 induction law in the type.
 
-Since the abstract type of bounded naturals has an induction law, we can used
+Since the abstract type of bounded naturals has an induction law, we can use
 it to prove that for every number `a` there exists another number `b` such
 that `b.successor = a` is valid.
 

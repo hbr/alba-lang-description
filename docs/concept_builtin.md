@@ -5,10 +5,10 @@ the module `core` of the basic library `alba.base`.
 
 All modules must used the module `core` either directly or
 indirectly. Therefore all builtin types and their corresponding primitive
-functions are properties are potentially available.
+functions and properties are potentially available.
 
 The module `core` is minimalistic in the sense that it just declares what is
-absolutely necessary to used and builtin types and reason about them.
+absolutely necessary to use builtin types and reason about them.
 
 E.g. the module `core` declares the type `BOOLEAN` with all boolean
 connectives like `not`, `and`, `or` and `==>` and some properties of these
