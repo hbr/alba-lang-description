@@ -13,7 +13,6 @@
         * [TUPLE](docs/concept_builtin_tuple.md)
         * [LIST](docs/concept_builtin_list.md)
     * [Function Definitions](docs/functions.md)
-    * [Classes and Types](docs(concept_class_type.md)
 * [Classes](docs/class.md)
     * [Inductive Classes](docs/class_inductive.md)
         * [Declaration](docs/class_inductive.md#declaration)
