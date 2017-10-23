@@ -31,8 +31,8 @@ annotations have to be added to disambiguate the situation.
 Alba is a **functional language** in the sense that functions are first class
 citizens which can be passed around arbitrarily. I.e. functions can be
 argument and return type of functions. Furthermore Alba share with functional
-languages like Haskell and OCaml then support for immutable types. An object
-is immutable by default unless declared to have a mutable type.
+languages like Haskell and OCaml the support for immutable types. An object is
+immutable by default unless declared to have a mutable type.
 
 Although having a strong functional component Alba supports **imperative
 programming** as well. It is possible to declare buffers and arrays as mutable

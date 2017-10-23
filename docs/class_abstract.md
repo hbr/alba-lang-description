@@ -43,8 +43,8 @@ functions. Abstract functions are functions with a deferred definition.
 The deferred function `<=` requires every descendant of `PARTIAL_ORDER` to
 have a corresponding function.
 
-Note that the how the class variable `PO` is used to declare the types of the
-variables `a` and `b`.
+Note how the class variable `PO` is used to declare the types of the variables
+`a` and `b`.
 
 
 Based on the abstract functions we can declare arbitrary other functions.

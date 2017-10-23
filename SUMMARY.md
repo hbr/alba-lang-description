@@ -1,5 +1,6 @@
 # Summary
 
+* [Table of Contents](SUMMARY.md)
 * [Abstract](README.md)
 * [Introduction](docs/introduction.md)
 * [Get and Use the Compiler](docs/get_and_use.md)
@@ -21,13 +22,23 @@
         * [Inheritance from ANY](docs/class_inductive.md#inheritance-from-any)
         * [Induction Law](docs/class_inductive.md#induction-law)
         * [Induction Proofs](docs/class_inductive.md#induction-proofs)
-        * [More on Induction Proofs](docs/class_inductive.md#more-on-induction-proofs)
-        * [Generalizing the Induction Goal](docs/class_inductive.md#generalizing-the-induction-goal)
+        * [More on Induction Proofs](
+            docs/class_inductive.md#more-on-induction-proofs)
+        * [Generalizing the Induction Goal](
+            docs/class_inductive.md#generalizing-the-induction-goal)
     * [Abstract Classes](docs/class_abstract.md)
         * [Declaration](docs/class_abstract.md#declaration)
         * [Inheritance](docs/class_abstract.md#inheritance)
         * [Function Redefinitions](docs/class_abstract.md#function-redefinitions)
         * [Rename](docs/class_abstract.md#rename)
+    * [Pseudoinductive Classes](docs/pseudo_inductive.md)
+        * [Motivation](docs/pseudo_inductive.md#motivation)
+        * [Machine Number](docs/pseudo_inductive.md#machine-number)
+        * [Induction Law](docs/pseudo_inductive.md#induction-law)
+        * [Recognizer](docs/pseudo_inductive.md#recognizer)
+        * [Projector](docs/pseudo_inductive.md#projector)
+        * [Recursion](docs/pseudo_inductive.md#recursion)
+        * [History](docs/pseudo_inductive.md#history)
 * [Inductive Sets and Relations](docs/inductive_sets.md)
     * [Inductive Definition](docs/inductive_sets.md#inductive-definition)
     * [Form of the Rules](docs/inductive_sets.md#form-of-the-rules)

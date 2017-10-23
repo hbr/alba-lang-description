@@ -9,7 +9,7 @@ These types are useful in order to define numbers and strings which
 have an efficient implementation but have all the comfort of inductive types
 like recursive functions and induction proofs.
 
-Implentations of numbers and strings by inductive types are notoriously
+Implementations of numbers and strings by inductive types are notoriously
 inefficient.
 
 The most straightforward way to define natural numbers is by an inductive type
@@ -55,19 +55,7 @@ which logically behave like lists of characters.
 In order to demonstrate the power of pseudoinductive types we define an
 abstract type to represent machine numbers with modulo arithmetic.
 
-    deferred class
-        BOUNDED_NATURAL
-
-    N: BOUNDED_NATURAL
-
-    (=) (a,b:N): BOOLEAN     deferred end
-
-    deferred class
-         BOUNDED_NATURAL
-    inherit
-         ANY
-    end
-
+    deferred class N:BOUNDED_NATURAL
 
 There is a number zero and a greatest number.
 
@@ -364,7 +352,7 @@ origninal call.
 
 These recursive definitions _define_ the functions `+` and `*`. Obviously the
 definitions are not very efficient to execute, because the addition of `k` to
-another number `n` needs `k` operators.
+another number `n` needs `k` operations.
 
 Any type which inherits `BOUNDED_NATURAL` can define a more efficient
 implemention of these functions as long as the definition in the heir is
@@ -380,29 +368,29 @@ translated to something executable. E.g. the function
 
     (<=) (n,k:N): BOOLEAN
         -> inspect
-               n, k
-           case 0, _ then
+           case 0,_ then
                true
-           case n.successor, k.successor then
-               n <= k
-           case _, _ then
+           case _, 0 then
                false
+           case a.successor, b.successor then
+               a <= b
 
 can be translated into the equivalent function
 
     (<=) (n,k:N): BOOLEAN
         -> if n = 0 then
                true
-           else if n /= 0 and k /= 0 then
-               n.predecessor <= k.predecessor
-           else
+           else if k = 0 then
                false
+           else
+               n.predecessor <= k.predecessor
 
 The compiler can verify the soundness of the recursion in the original
 definition. The soundness in the translated code is not that easy to check. In
-order to check the soundness of the translate function it would be necessary
-to prove that `BOUNDED_NATURAL` inherits `WELLFOUNDED` and the recursive
-definition would need to define some bound function like
+order to check the soundness of the translated function it is necessary
+that `BOUNDED_NATURAL` has some wellfounded relation `<` and that each
+recursive call makes some expression smaller with respect to the wellfounded
+relation `<`.
 
     (<=) (n,k:N): BOOLEAN
         decrease
@@ -410,18 +398,16 @@ definition would need to define some bound function like
         ensure
             -> if n = 0 then
                    true
-               else if n /= 0 and k /= 0 then
-                   n.predecessor <= k.predecessor
-               else
+               else if k = 0 then
                    false
+               else
+                   n.predecessor <= k.predecessor
         end
 
-This would require much more machinery because `BOUNDED_NATURAL` cannot
-inherit `WELLFOUNDED` unless it has a wellfounded relation `<`. The definition
-of `<` however already needs some order relation which had to be defined
-independently of `<=` in order to avoid circularity. It is not impossible to
-do but not as elegant as the usage of pattern matching with its syntactic
-checking of soundness of the recursion.
+This requires much more machinery. The definition of `<` already needs some
+order relation which has to be defined independently of `<=` in order to avoid
+circularity. It is not impossible to do but not as elegant as the usage of
+pattern matching with its syntactic checking of soundness of the recursion.
 
 
 
@@ -446,6 +432,11 @@ matching and induction proofs available to types which are not inductive/free
 data types.
 
 
+<!--
+
+
+
+-->
 
 <!---
 Local Variables:
