@@ -40,6 +40,9 @@ Because of this philosophy the Albatross compiler is something between a proof
 assistant and a theorem prover.
 
 
+> During 2018 a major update of the compiler is planned in order to be able to
+  produce executable code from Albatross sources. Therefore no major update
+  will appear within 2018.
 
 
 <!---
